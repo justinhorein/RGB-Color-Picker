@@ -1,4 +1,4 @@
-// Select and assign all Necessary DOM Elements
+// Select and assign all necessary DOM elements.
 let numSquares = 6;
 let colors =[];
 let pickedColor;
@@ -11,13 +11,16 @@ let h1 = document.querySelector("h1");
 
 init();
 
+// Calls all necessary functions for the program to work.
 function init(){
     setupModeButtons();
-    resetButton.addEventListener("click", reset);
     setupSquares();
+    resetButton.addEventListener("click", reset);
     reset();
 }
 
+// Sets up 'Easy' and 'Hard' Buttons: Enables them (upon click) to appear as selected,
+// changes the number of squares active and resets the game.
 function setupModeButtons(){
     for (i=0; i < modeButtons.length; i++){
         modeButtons[i].addEventListener("click", function(){
@@ -29,6 +32,7 @@ function setupModeButtons(){
     })};
 }
 
+// Sets up squares to (upon click) be check against the Picked Color and display a resulting message on the Message Display.
 function setupSquares(){
     for (i=0; i < squares.length; i++){
         squares[i].addEventListener('click', function(){
@@ -47,40 +51,15 @@ function setupSquares(){
     })};
 }
 
-//Assign starting colors to squares
-for (i=0; i<squares.length; i++){
-    squares[i].style.backgroundColor = colors[i];
-};
-
-function pickColor() {
-    let random = Math.floor(Math.random() * colors.length);
-    return colors[random];
-}
-
+// Called from the setupSquares function: changes all squares to the Picked Color in the event when the correct color is chosen.
 function changeColors(color){
     for (i=0; i < squares.length; i++){
         squares[i].style.backgroundColor = color;      
     }
 }
 
-function generateRandomColors(num){
-    //make an array
-    let arr = [];
-    //add num random colors to array
-    for(i=0; i < num; i++){
-        arr.push(randomColor());
-    };
-    //return that array
-    return arr;
-}
-
-function randomColor(){
-    let r = Math.floor(Math.random() * 256);
-    let g = Math.floor(Math.random() * 256);
-    let b = Math.floor(Math.random() * 256);
-    return "rgb(" + r + ", " + g + ", " + b + ")";
-}
-
+// Does everything from generating new colors, to setting and displaying the new Picked Color, 
+// to resetting the dashboard text content and color, to assigning the squares the newly generated colors.
 function reset(){
     colors = generateRandomColors(numSquares);
     colorDisplay.textContent = pickedColor = pickColor();
@@ -95,34 +74,31 @@ function reset(){
             squares[i].style.display = "none";
         }  
     }
-};
+}
 
-// easyBtn.addEventListener("click", function(){
-//     easyBtn.classList.add("selected");
-//     hardBtn.classList.remove("selected");
-//     numSquares = 3;
-//     colors = generateRandomColors(numSquares);
-//     colorDisplay.textContent = pickedColor = pickColor();
-//     MessageDisplay.textContent = "";
-//     for (i=0; i< squares.length; i++){
-//         if (colors[i]){
-//             squares[i].style.background = colors[i];
-//         } else {
-//             squares[i].style.display = "none";
-//         }  
-//     }
-// });
+// Called by reset: generates and returns an array of random colors.
+function generateRandomColors(num){
+    //make an array
+    let arr = [];
+    //add num random colors to array
+    for(i=0; i < num; i++){
+        arr.push(randomColor());
+    };
+    //return that array
+    return arr;
+}
 
-// hardBtn.addEventListener("click", function(){
-//     hardBtn.classList.add("selected");
-//     easyBtn.classList.remove("selected");
-//     numSquares = 6;
-//     colors = generateRandomColors(numSquares);
-//     colorDisplay.textContent = pickedColor = pickColor();
-//     MessageDisplay.textContent = "";
-//     for (i=0; i< squares.length; i++){
-//             squares[i].style.background = colors[i];
-//             squares[i].style.display = "block";
-//         }  
-// });
+// Called by generateRandomColor: generates and returns a random rgb color.
+function randomColor(){
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return "rgb(" + r + ", " + g + ", " + b + ")";
+}
 
+// Called by reset: generates a random number inorder to select a random index from the array 
+// returned by generateRandomColors, inorder to select a random Picked Color. 
+function pickColor() {
+    let random = Math.floor(Math.random() * colors.length);
+    return colors[random];
+}
